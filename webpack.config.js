@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const Dotenv = require('dotenv-webpack');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   entry: './client/index.js',
@@ -23,9 +24,10 @@ module.exports = {
         }
       },
       {
-        test: /\.s?[ac]ss/,
+        test: /\.css$/,
         use: [
           // MiniCssExtractPlugin.loader best for production
+          MiniCssExtractPlugin.loader,
           'style-loader', // best for dev
           'css-loader', // resolve all css into single string
           'sass-loader' // transpile sass/scss into css
@@ -51,7 +53,10 @@ module.exports = {
         new HtmlWebpackPlugin({ // install and require
             template: './index.html'
         }),
-        new Dotenv()
+        new Dotenv(),
+        new MiniCssExtractPlugin({
+          filename: 'style.css'
+        })
     ],
 
 }
